@@ -7,6 +7,12 @@ name = "pypi"
 pre-commit = "*"
 pandas = "*"
 pydantic-settings = "*"
+matplotlib = "*"
+seaborn = "*"
+marvin = "*"
+scikit-learn = "*"
+statsmodels = "*"
+xgboost = "*"
 
 [dev-packages]
 ipykernel = "*"
