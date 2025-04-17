@@ -15,8 +15,8 @@ statsmodels = "*"
 xgboost = "*"
 
 [dev-packages]
-ipykernel = "*"
 pre-commit = "*"
+ipykernel = "*"
 
 [scripts]
 format = "pre-commit run --all-files"
