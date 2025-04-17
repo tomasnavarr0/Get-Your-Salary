@@ -4,10 +4,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from numpy import ndarray
 from typing_extensions import Self
-from sklearn.ensemble import RandomForestRegressor,
+from sklearn.ensemble import RandomForestRegressor
 from .df_selector import DataFrameSelector
 from .transformers import SeniorityTransformer, OrganizationSizeTransformer
-from app.models import Array
+from app.data_models import Array
 from pandas import DataFrame
 from sklearn.feature_selection import SelectFromModel
 

@@ -1,7 +1,7 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 from typing_extensions import Self
 from pandas import DataFrame
-from app.models import Array
+from app.data_models import Array
 from numpy import array, ndarray
 
 

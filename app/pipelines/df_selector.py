@@ -1,7 +1,7 @@
 from pandas import DataFrame
 from typing_extensions import Self
 from sklearn.base import BaseEstimator, TransformerMixin
-from app.models import Array
+from app.data_models import Array
 
 
 class DataFrameSelector(BaseEstimator, TransformerMixin):

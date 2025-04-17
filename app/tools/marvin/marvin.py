@@ -1,6 +1,6 @@
 import marvin
 from .config import CLASSIFICATION_INSTRUCTIONS
-from app.models import TechRole
+from app.data_models import TechRole
 
 
 class GetRole:
