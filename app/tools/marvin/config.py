@@ -1,4 +1,6 @@
-CLASSIFICATION_INSTRUCTIONS = """Act as an expert technical role classifier. Analyze the provided list of technologies and determine the most appropriate role for the candidate based strictly on the following guidelines:
+CLASSIFICATION_INSTRUCTIONS = """Act as an expert technical role classifier.
+ Analyze the provided list of technologies and determine the most appropriate role for the candidate based
+   strictly on the following guidelines:
 
 ### Role Definitions:
 1. FRONTEND: React, Angular, Vue, JavaScript/TypeScript, CSS, HTML, UI frameworks

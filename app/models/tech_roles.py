@@ -1,8 +1,9 @@
 from enum import Enum, auto
 
+
 class TechRole(Enum):
     FRONTEND = auto()
-    BACKEND =  auto()
+    BACKEND = auto()
     FULL_STACK = auto()
     DATA_SCIENTIST = auto()
     DATA_ANALYST = auto()
