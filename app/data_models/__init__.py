@@ -1,7 +1,7 @@
 from pandas import DataFrame, Series
 from numpy import ndarray
 
-from .tech_roles import TechRole
+from .enums.tech_roles import TechRole
 from .pred_response import PredictionResponse
 from .salary import SalaryRequest
 

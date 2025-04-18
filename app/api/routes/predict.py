@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.predictor import SalaryPredictor
+from app.salary_predictor import SalaryPredictor
 from app.data_models import SalaryRequest
 from app.data_models import PredictionResponse
 

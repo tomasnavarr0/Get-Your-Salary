@@ -1,13 +1,14 @@
 from pydantic import BaseModel
+from .enums import CompanySize, ContractType, SeniorityLevel, TechRole, ModalityType
 
 
 class SalaryRequest(BaseModel):
     dedicacion: str
-    contrato: str
-    cantidad_de_personas_en_tu_organizacion: str
-    modalidad_de_trabajo: str
-    seniority: str
-    marvin_rol: int
+    contrato: ContractType
+    cantidad_de_personas_en_tu_organizacion: CompanySize
+    modalidad_de_trabajo: ModalityType
+    seniority: SeniorityLevel
+    marvin_rol: TechRole
     anos_de_experiencia: int
     antiguedad_en_la_empresa_actual: int
     anos_en_el_puesto_actual: int
