@@ -1,3 +1,6 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent.parent))
 import streamlit as st
 from app.data_models.enums import Dedication, ContractType, ModalityType, CompanySize, SeniorityLevel, TechRole
 import requests
@@ -57,11 +60,11 @@ if submit_button:
     with st.spinner("Calculando predicción..."):
         try:
             # Cambia esta URL por la de tu API en producción
-            response = requests.post("http://localhost:8000/predict", json=payload)
+            response = requests.post("http://localhost:8000/api/v1/predict", json=payload)
 
             if response.status_code == 200:
                 result = response.json()
-                predicted_salary = result.get("prediction", 0)
+                predicted_salary = result.get("salario_estimado", 0)
 
                 # Mostrar resultado con estilo
                 st.markdown(
