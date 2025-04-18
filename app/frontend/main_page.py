@@ -7,7 +7,6 @@ import requests
 
 st.markdown("<h1 class='title'>💰 Predictor de Salarios Tech</h1>", unsafe_allow_html=True)
 
-# --- Formulario de entrada ---
 with st.form("salary_prediction_form"):
     col1, col2 = st.columns(2)
 
@@ -39,9 +38,7 @@ with st.form("salary_prediction_form"):
 
     submit_button = st.form_submit_button("Predecir Salario", type="primary")
 
-# --- Procesamiento del formulario ---
 if submit_button:
-    # Construir el payload para la API
     payload = {
         "dedicacion": dedicacion,
         "contrato": contrato,
@@ -56,23 +53,19 @@ if submit_button:
         "edad": edad,
     }
 
-    # Mostrar spinner mientras se hace la petición
     with st.spinner("Calculando predicción..."):
         try:
-            # Cambia esta URL por la de tu API en producción
             response = requests.post("http://localhost:8000/api/v1/predict", json=payload)
 
             if response.status_code == 200:
                 result = response.json()
                 predicted_salary = result.get("salario_estimado", 0)
 
-                # Mostrar resultado con estilo
                 st.markdown(
                     f"<div class='prediction-result'>" f"💰 Salario estimado: <span style='color: #4CAF50;'>${predicted_salary:,.2f}</span>" f"</div>",
                     unsafe_allow_html=True,
                 )
 
-                # Mostrar detalles de la predicción
                 with st.expander("Ver detalles técnicos"):
                     st.json(result)
             else:
@@ -81,7 +74,6 @@ if submit_button:
         except Exception as e:
             st.error(f"Error al conectar con la API: {str(e)}")
 
-# --- Sidebar con información adicional ---
 with st.sidebar:
     st.markdown("## ℹ️ Acerca de")
     st.markdown(

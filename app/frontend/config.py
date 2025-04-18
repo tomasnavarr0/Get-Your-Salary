@@ -1,9 +1,7 @@
 import streamlit as st
 
-# Configuración inicial de la página
 st.set_page_config(page_title="Salary Predictor", page_icon="💰", layout="wide", initial_sidebar_state="expanded")
 
-# --- Estilos CSS personalizados ---
 st.markdown(
     """
 <style>
