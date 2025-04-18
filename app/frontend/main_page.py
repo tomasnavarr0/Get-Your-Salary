@@ -7,6 +7,18 @@ import requests
 
 st.markdown("<h1 class='title'>💰 Predictor de Salarios Tech</h1>", unsafe_allow_html=True)
 
+TECH_ROLE_DISPLAY_NAMES = {
+    TechRole.FRONTEND: "Frontend",
+    TechRole.BACKEND: "Backend",
+    TechRole.FULL_STACK: "Full Stack",
+    TechRole.DATA_SCIENTIST: "Data Scientist",
+    TechRole.DATA_ANALYST: "Data Analyst",
+    TechRole.DATA_ENGINEER: "Data Engineer",
+    TechRole.DEVOPS: "DevOps",
+    TechRole.QA: "QA",
+    TechRole.OTHER: "Otro"
+}
+
 with st.form("salary_prediction_form"):
     col1, col2 = st.columns(2)
 
@@ -22,7 +34,12 @@ with st.form("salary_prediction_form"):
         st.markdown("### 👨‍💻 Perfil Profesional")
         with st.container(border=True):
             seniority = st.selectbox("Nivel de seniority", [e.value for e in SeniorityLevel], index=1)
-            tech_role = st.selectbox("Rol tecnológico", [e.value for e in TechRole], index=0)
+
+            tech_role = st.selectbox(
+                "Rol tecnológico",
+                options=list(TECH_ROLE_DISPLAY_NAMES.values()),
+                index=0
+            )
             experiencia = st.slider("Años de experiencia", min_value=0, max_value=50, value=3)
             antiguedad_empresa = st.slider("Antigüedad en la empresa actual (años)", min_value=0, max_value=50, value=2)
 
@@ -38,19 +55,24 @@ with st.form("salary_prediction_form"):
 
     submit_button = st.form_submit_button("Predecir Salario", type="primary")
 
+# Al enviar el formulario, convertir a valor numérico
 if submit_button:
+    # Obtener la clave del Enum a partir del valor mostrado
+    role_mapping = {v: k for k, v in TECH_ROLE_DISPLAY_NAMES.items()}
+    selected_role = role_mapping[tech_role]
+    
     payload = {
         "dedicacion": dedicacion,
         "contrato": contrato,
         "cantidad_de_personas_en_tu_organizacion": company_size,
         "modalidad_de_trabajo": modalidad,
         "seniority": seniority,
-        "marvin_rol": tech_role,
+        "marvin_rol": selected_role.value,  # Aquí envía el número del auto()
         "anos_de_experiencia": experiencia,
         "antiguedad_en_la_empresa_actual": antiguedad_empresa,
         "anos_en_el_puesto_actual": antiguedad_puesto,
         "cuantas_personas_tenes_a_cargo": personas_cargo,
-        "edad": edad,
+        "edad": edad
     }
 
     with st.spinner("Calculando predicción..."):
