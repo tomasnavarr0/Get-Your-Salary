@@ -12,7 +12,7 @@ class SalaryRequest(BaseModel):
     anos_de_experiencia: int = Field(ge=0, le=50)
     antiguedad_en_la_empresa_actual: int = Field(ge=0, le=50)
     anos_en_el_puesto_actual: int = Field(ge=0, le=50)
-    cuantas_personas_tenes_a_cargo: int = Field(ge=0, le=1000)
+    cuantas_personas_tenes_a_cargo: int = Field(ge=0, le=100)
     edad: int = Field(ge=18, le=70)
 
     model_config = ConfigDict(use_enum_values=True)
