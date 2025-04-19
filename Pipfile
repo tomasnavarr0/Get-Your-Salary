@@ -16,7 +16,7 @@ xgboost = "3.0.0"
 fastapi = "0.115.12"
 streamlit = "1.44.1"
 requests = "2.32.3"
-imbalanced-learn = "*"
+imbalanced-learn = "0.13.0"
 
 [dev-packages]
 pre-commit = "*"

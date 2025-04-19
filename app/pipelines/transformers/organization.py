@@ -8,7 +8,7 @@ from numpy import array, ndarray
 class OrganizationSizeTransformer(BaseEstimator, TransformerMixin):
     size_mapping = {
         "1 (solamente yo)": 1,
-        "De 2 a 10 personas": 6,  # promedio de 2 y 10
+        "De 2 a 10 personas": 6,
         "De 11 a 50 personas": 30,
         "De 51 a 100 personas": 75,
         "De 101 a 200 personas": 150,

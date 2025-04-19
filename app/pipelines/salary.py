@@ -13,8 +13,6 @@ from sklearn.feature_selection import SelectFromModel
 
 
 class SalaryPredictionPipeline:
-    """Pipeline completa para la predicción de salarios."""
-
     def __init__(self, model: Any | None = None):
         self.model = model
         self.pipeline: Pipeline | None = None

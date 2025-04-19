@@ -12,9 +12,9 @@ class SalaryPredictor:
         self.metadata = None
         self.load_model()
 
-    def load_model(self, model_path: str = "models/salary_pipeline_v2.pkl"):
+    def load_model(self, model_path: str = "models/salary_pipeline_v3.pkl"):
         self.model = joblib.load(model_path)
-        self.metadata = joblib.load(Path(model_path).parent / "metadata_v2.pkl")
+        self.metadata = joblib.load(Path(model_path).parent / "metadata_v3.pkl")
 
     def predict(self, input_data: dict[str, Any]) -> PredictionResponse:
         df = pd.DataFrame([input_data])
