@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    # Agrega esto para mejor descubrimiento
+    environment:
+      - API_HOST=api
+      - API_PORT=8000
+
+  streamlit:
+    build: .
+    command: streamlit run app/frontend/main_page.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    networks:
+      - app-network
+    # Variables para la conexión
+    environment:
+      - API_URL=http://api:8000
+
+networks:
+  app-network:
+    driver: bridge

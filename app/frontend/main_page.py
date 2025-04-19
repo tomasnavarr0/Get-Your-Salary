@@ -49,7 +49,7 @@ with st.form("salary_prediction_form"):
         with col3:
             antiguedad_puesto = st.slider("Años en el puesto actual", min_value=0, max_value=50, value=1)
         with col4:
-            personas_cargo = st.slider("Personas a cargo", min_value=0, max_value=1000, value=0)
+            personas_cargo = st.slider("Personas a cargo", min_value=0, max_value=100, value=0)
 
     edad = st.slider("Edad", min_value=18, max_value=70, value=30)
 
@@ -77,7 +77,7 @@ if submit_button:
 
     with st.spinner("Calculando predicción..."):
         try:
-            response = requests.post("http://localhost:8000/api/v1/predict", json=payload)
+            response = requests.post("http://api:8000/api/v1/predict", json=payload)
 
             if response.status_code == 200:
                 result = response.json()
@@ -110,7 +110,7 @@ with st.sidebar:
     )
 
     st.markdown("## ⚙️ Configuración")
-    api_url = st.text_input("URL de la API", value="http://localhost:8000/predict", help="Cambia esta URL si la API está en otro servidor")
+    api_url = st.text_input("URL de la API", value="http://api:8000/api/v1/predict", help="Cambia esta URL si la API está en otro servidor")
 
     st.markdown("## 📊 Métricas")
     st.metric("Total de predicciones", "1,243", "+15 esta semana")
