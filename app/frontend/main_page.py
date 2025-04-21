@@ -78,7 +78,7 @@ if submit_button:
 
             if response.status_code == 200:
                 result = response.json()
-                predicted_salary = result.get("salario_estimado", 0)
+                predicted_salary = result.get("salary", 0)
 
                 st.markdown(
                     f"<div class='prediction-result'>" f"💰 Salario estimado: <span style='color: #4CAF50;'>${predicted_salary:,.2f}</span>" f"</div>",
