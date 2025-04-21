@@ -6,7 +6,7 @@ Aplicación de Data Science que estima el salario para roles de Tecnología de l
 ## Características
 - **Interfaz amigable**: formulario web para ingresar datos clave y ver la predicción al instante.  
 - **API REST**: endpoint `/predict` para integrar fácilmente el servicio en otras aplicaciones.  
-- **Modelo sólido**: pipeline de preprocesamiento + algoritmo de regresión (por ejemplo, Random Forest o XGBoost).  
+- **Modelo sólido**: pipeline de preprocesamiento + algoritmo de regresión.  
 - **Contenedores Docker**: despliegue reproducible con Docker Compose.  
 - **Código modular**: separación clara entre componentes de datos, entrenamiento, API y frontend.
 
