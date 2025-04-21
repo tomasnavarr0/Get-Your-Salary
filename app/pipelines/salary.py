@@ -70,20 +70,17 @@ class SalaryPredictionPipeline:
         if self.pipeline is None:
             self.build_pipeline()
 
-        if X.isna().any().any():
-            print("Advertencia: El dataset tiene valores NaN. La pipeline intentará manejarlos.")
-
-        self.pipeline.fit(X, y)
+        self.pipeline.fit(X, y)  # type: ignore[union-attr]
         return self
 
     def transform(self, X: DataFrame) -> ndarray:
         if self.pipeline is None:
-            raise ValueError("La pipeline no ha sido construida o entrenada")
+            raise ValueError("Pipeline not built")
 
         return self.pipeline.transform(X)
 
     def predict(self, X: DataFrame) -> ndarray:
         if self.pipeline is None or self.model is None:
-            raise ValueError("La pipeline completa con modelo no está disponible")
+            raise ValueError("Pipeline not built or model not set")
 
         return self.pipeline.predict(X)
