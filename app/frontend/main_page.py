@@ -6,7 +6,6 @@ import requests  # type: ignore[import]
 sys.path.append(str(Path(__file__).parent.parent.parent))
 from app.data_models.enums import Dedication, ContractType, ModalityType, CompanySize, SeniorityLevel, TechRole
 
-
 st.markdown("<h1 class='title'>💰 Predictor de Salarios Tech</h1>", unsafe_allow_html=True)
 
 TECH_ROLE_DISPLAY_NAMES = {
