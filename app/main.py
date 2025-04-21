@@ -1,23 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import router
-import logging
-from contextlib import asynccontextmanager
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    logging.info("Starting application...")
-    yield
-    logging.info("Shutting down application...")
 
 
 app = FastAPI(
     title="Salary Prediction API",
-    description="API para predecir salarios basados en características del empleado",
+    description="Get your salary",
     version="1.0.0",
     contact={"name": "Nava", "email": "tomas.navarro@gmail.com"},
-    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -37,5 +27,5 @@ app.include_router(
     router,
     prefix="/api/v1",
     tags=["predictions"],
-    responses={400: {"description": "Solicitud inválida"}, 500: {"description": "Error interno del servidor"}},
+    responses={400: {"description": "Wrong request"}, 500: {"description": "Internal server error"}},
 )

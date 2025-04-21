@@ -21,8 +21,8 @@ class SalaryPredictor:
         log_pred = self.model.predict(df)
 
         return PredictionResponse(
-            prediccion_log=float(log_pred[0]),
-            salario_estimado=float(np.expm1(log_pred[0])),
-            moneda="ARS",
-            version_modelo=str(self.metadata["model_version"]),
+            prediction_log=float(log_pred[0]),
+            salary=float(np.expm1(log_pred[0])),
+            currency="ARS",
+            model_version=str(self.metadata["model_version"]),
         )
