@@ -1,7 +1,7 @@
 # Predicción de Salarios IT
 
 ## Descripción
-Aplicación de Data Science que estima el salario para roles de Tecnología de la Información (IT) en base a variables proporcionadas por el usuario (años de experiencia, nivel educativo, ubicación, tecnologías dominadas, etc.). El modelo ha sido entrenado con datos reales de ofertas laborales y ofrece resultados en tiempo real.
+Aplicación de Data Science que estima el salario para roles de Tecnología de la Información (IT) en base a variables proporcionadas por el usuario. El modelo ha sido entrenado con datos reales de encuestas laborales y ofrece resultados en tiempo real.
 
 ## Características
 - **Interfaz amigable**: formulario web para ingresar datos clave y ver la predicción al instante.  
