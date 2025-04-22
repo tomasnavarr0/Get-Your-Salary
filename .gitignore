@@ -5,6 +5,12 @@ __pycache__/
 
 # C extensions
 *.so
+data\inflacion_argentina.csv
+data\salarios_tech.csv
+data\tech_salaries_encoded.csv
+data\tech_salaries_filtered_no_others.csv
+data\tech_salaries_filtered.csv
+data\tech_salaries_final_dataset.csv
 
 # Distribution / packaging
 .Python
