@@ -2,12 +2,12 @@ import sys
 from pathlib import Path
 import streamlit as st
 import requests  # type: ignore[import]
-from app.db import DBService
-from app.db.models import SalaryRequestModel
 import asyncio
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
 from app.data_models.enums import Dedication, ContractType, ModalityType, CompanySize, SeniorityLevel, TechRole
+from app.db import DBService
+from app.db.models import SalaryRequestModel
 
 db_service = DBService()
 
