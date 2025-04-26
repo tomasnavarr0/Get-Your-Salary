@@ -9,4 +9,4 @@ predictor = SalaryPredictor()
 
 @router.post("/predict")
 async def predict(request: SalaryRequest) -> PredictionResponse:
-    return predictor.predict(request.model_dump())
+    return await predictor.predict(request.model_dump())
