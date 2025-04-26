@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from typing import Any
 import streamlit as st
 import requests  # type: ignore[import]
 import asyncio
@@ -9,9 +10,45 @@ from app.data_models.enums import Dedication, ContractType, ModalityType, Compan
 from app.db import DBService
 from app.db.models import SalaryRequestModel
 
-db_service = DBService()
 
-st.markdown("<h1 class='title'>💰 Predictor de Salarios Tech</h1>", unsafe_allow_html=True)
+async def add_to_db(salary_request: dict[str, Any]) -> None:
+    db_service = DBService()
+    await db_service.add_data(salary_request)
+
+
+st.set_page_config(page_title="💰 Get Tech Salary", page_icon="💻", layout="wide")
+
+
+def show_header():
+    # Usamos 3 columnas con diferentes proporciones
+    col_logo, col_title, col_cafe = st.columns([2, 4, 2])
+
+    with col_logo:
+        st.image("app/frontend/images/gys_logo.png", width=250)
+
+    with col_title:
+        # Centramos el título con CSS
+        st.markdown(
+            """
+            <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                <h1 style="margin: 0;">💰 Get Tech Salary</h1>
+            </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    with col_cafe:
+        # Botón de Cafecito alineado a la derecha
+        st.markdown(
+            f'<div style="text-align: right;">'
+            f'<a href="https://cafecito.app/tomasnavarro" target="_blank">'
+            f'<img src="https://cdn.cafecito.app/imgs/buttons/button_5.png" alt="Comprarme un café" width="250">'
+            f"</a></div>",
+            unsafe_allow_html=True,
+        )
+
+
+show_header()
 
 TECH_ROLE_DISPLAY_NAMES = {
     TechRole.FRONTEND: "Frontend",
@@ -51,11 +88,11 @@ with st.form("salary_prediction_form"):
         with col3:
             antiguedad_puesto = st.slider("Años en el puesto actual", min_value=0, max_value=50, value=1)
         with col4:
-            personas_cargo = st.slider("Personas a cargo", min_value=0, max_value=100, value=0)
+            personas_cargo = st.slider("Personas a cargo", min_value=0, max_value=50, value=0)
 
     edad = st.slider("Edad", min_value=18, max_value=70, value=30)
 
-    submit_button = st.form_submit_button("Predecir Salario", type="primary")
+    submit_button = st.form_submit_button("Obtener Salario", type="primary")
 
 
 if submit_button:
@@ -77,10 +114,13 @@ if submit_button:
         "edad": edad,
     }
     salary_request = SalaryRequestModel(**payload)
-    asyncio.run(db_service.add_data(salary_request))
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(add_to_db(salary_request))
+    loop.close()
     payload.pop("username")
 
-    with st.spinner("Calculando predicción..."):
+    with st.spinner("Calculando Salario..."):
         try:
             response = requests.post("http://api:8000/api/v1/predict", json=payload)
 
@@ -100,22 +140,3 @@ if submit_button:
 
         except Exception as e:
             st.error(f"Error al conectar con la API: {str(e)}")
-
-with st.sidebar:
-    st.markdown("## ℹ️ Acerca de")
-    st.markdown(
-        """
-    Esta aplicación predice salarios para profesionales tech basándose en:
-    - Rol tecnológico
-    - Experiencia
-    - Tamaño de empresa
-    - Ubicación
-    - Y otros factores relevantes
-    """
-    )
-
-    st.markdown("## ⚙️ Configuración")
-    api_url = st.text_input("URL de la API", value="http://api:8000/api/v1/predict", help="Cambia esta URL si la API está en otro servidor")
-
-    st.markdown("## 📊 Métricas")
-    st.metric("Total de predicciones", "1,243", "+15 esta semana")

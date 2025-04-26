@@ -8,8 +8,6 @@ from app.data_models import PredictionResponse
 from app.db import DBService
 from typing import Any
 
-db_service = DBService()
-
 
 class SalaryPredictor:
     def __init__(self):
@@ -23,6 +21,7 @@ class SalaryPredictor:
 
     @staticmethod
     async def upsert_db(sql_model_data: SQLModel) -> None:
+        db_service = DBService()
         await db_service.add_data(sql_model_data)
 
     async def predict(self, input_data: dict[str, Any]) -> PredictionResponse:
