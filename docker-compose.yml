@@ -8,7 +8,6 @@ services:
       - "8000:8000"
     networks:
       - app-network
-    # Agrega esto para mejor descubrimiento
     environment:
       - API_HOST=api
       - API_PORT=8000
@@ -22,7 +21,6 @@ services:
       - api
     networks:
       - app-network
-    # Variables para la conexión
     environment:
       - API_URL=http://api:8000
 
