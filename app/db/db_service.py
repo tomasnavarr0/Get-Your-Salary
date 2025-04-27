@@ -6,8 +6,6 @@ from sqlalchemy.orm import sessionmaker
 
 
 class DBService:
-    engine = None
-    async_session = None
 
     async def initialize(self):
         self.engine = create_async_engine(

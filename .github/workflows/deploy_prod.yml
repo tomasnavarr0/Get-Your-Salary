@@ -1,0 +1,68 @@
+name: Deploy to AWS EC2 (PROD)
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout el código del repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # 2. Configurar acceso SSH para el servidor EC2
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      # 3. Limpiar el servidor EC2
+      - name: Clean EC2 server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            # Eliminar archivos del directorio de la app
+            sudo rm -rf /home/${{ secrets.EC2_USER }}/app/*
+
+            # Eliminar imágenes Docker antiguas
+            sudo docker system prune -af || true
+          EOF
+
+      # 4. Crear el directorio en el servidor EC2
+      - name: Create directory on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} 'mkdir -p /home/${{ secrets.EC2_USER }}/app'
+
+      # 5. Copiar los archivos de la aplicación al servidor EC2
+      - name: Copy files to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -r * ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/app
+
+      # 6. Decodificar y transferir el archivo .env al servidor EC2
+      - name: Decode and transfer .env file to EC2
+        env:
+          ENV_FILE_BASE64_PROD: ${{ secrets.ENV_FILE_BASE64_PROD }}
+        run: |
+          echo "$ENV_FILE_BASE64_PROD" > .env
+          scp -o StrictHostKeyChecking=no .env ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/app/.env
+
+      # 7. Construir y levantar contenedores con Docker Compose
+      - name: Deploy with Docker Compose
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/${{ secrets.EC2_USER }}/app
+
+            # Si ya hay un stack de docker-compose ejecutándose, detenerlo primero
+            if [ -f docker-compose.yml ]; then
+              sudo docker-compose down || true
+            fi
+
+            # Construir y levantar todos los servicios definidos en docker-compose.yml
+            sudo docker-compose up --build -d
+
+            # Mostrar el estado de los contenedores
+            sudo docker-compose ps
+          EOF
